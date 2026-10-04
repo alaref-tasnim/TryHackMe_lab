@@ -1,0 +1,5 @@
+* trust boundary:  is where data moves from one security context to another, and every one is a potential attack surface
+* OWASP: The Open Web Application Security Project is a nonprofit foundation focused on understanding web technologies and exploitations and provides resources and tools designed to improve the security of software applications.
+* (NIST): National Institute of Standards and Technology. This organisation develops frameworks and policies for information security that is used all throughout the industry.
+* Prompt Construction: combines the system prompt, user query, and retrieved context into the final promot sent to the model 
+* MLSecOps is the practice of integrating security throughout the machine learning lifecycle, from development and testing through deployment and live operations.
