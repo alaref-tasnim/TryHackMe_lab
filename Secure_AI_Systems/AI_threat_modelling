@@ -1,0 +1,66 @@
+Crafting input (also called adversarial input generation or payload construction) means intentionally designing, modifying, or formatting the data sent to an AI model so that it triggers a specific, unintended behavior while looking harmless or normal to humans
+
+Example of crafting input in differenct Areas of AI:
+1. computer vision > adding tiny noice into an image or sound file
+2. llm > prompt injection rewriting the system prompt to refiel data or ignore previous instructions 
+3. backdoor trigger > inserting a pattern to activate a backdoor previously installed in the model.
+
+* Crafting input break traditional STRIDE threat classification because a single crafted input can act as Tampering, Spoofing, and Elevation of Privilege all at once, whereas STRIDE relies on threats fitting neatly into separate, distinct categories 
+
+crafting API queries means crafting specific inputs sent to the API.
+
+
+Explaining STRIDE in AI:
+1. spoofing 
+  - Spoofing = Faking an Identity to Gain Trust.
+  - In a RAG system, a hacker's fake document pretends to be an Authoritative Internal Document to fool the AI's Retrieval Engine.
+  - the attacker tricks the AI into trusting untrusted attacker content by disguising it as an authentic, authoritative corporate data source.
+2. Tampering   > modifing data in rest, or in transit   
+   - Primary AI Manifestation → Data Poisoning >  An attacker injects malicious data into the training pipeline, causing the model to learn incorrect patterns
+   - Model manipulation: directly modifying model weights in storage or swapping models in the registry with backdoored versions
+   - Prompt injection: manipulating instructions or context the model 
+   - Feature manipulation: altering input features so the model makes decisions based on tampered data
+3. Repudiation: Unexplainable Model Decisions
+   - AI repudiation happens when you can't prove, trace, or explain why a model made a specific high-stakes decision after the fact.
+   - Standard logs only record the final decision, completely missing the complex, moving parts behind it (exact input features, system prompts, RAG context, and model hyperparameters).
+4. Information disclosure:
+   - Primary AI Manifestation → Model Extraction (Model Stealing)
+   - Training data extraction: crafting queries that cause the model to regurgitate memorised training data, potentially including PII or proprietary content
+   - System prompt leakage: using prompt extraction techniques to reveal internal instructions, guardrails, and business logic
+   - Embedding inversion: Because embedding vectors preserve text relationships rather than hashing them, an attacker can train a decoder network to translate the numbers back into the original, sensitive source text.
+5. Denial of Service: 
+   - Inference Cost Exploitation (Denial of Wallet)
+   - In a Denial of Wallet (DoW) attack, adversaries exploit an organization's "public-facing AI"  features by flooding them with complex, max-length queries.
+   - Drain the organization's financial budget (exhaust API credit/funds).
+   - System stays online and operational (green status).
+6. Elevation of Privilege: jailbraking 
+   - Tool use exploitation: General Tool Abuse using prompt injection, manipulating an agentic AI into using its tools (web browsing, file writing, API calls) for unintended purposes
+   - Tool Use Exploitation is like tricking a driver into taking the car to the wrong destination.
+   - Cross-Plugin Escalation (Privilege Jumping): Cross-plugin escalation occurs when an attacker uses a low-privilege tool's input (prompt) to trick an AI into executing unauthorized actions through a high-privilege tool.
+
+
+####################################
+* MITRE **ATT&CK** focuses on adversary tactics and techniques against traditional IT infrastructure and networks
+* MITRE **ATLAS** adapts that same framework to focus specifically on threats targeting artificial intelligence and machine learning systems.
+
+- Threat modeling (using frameworks like STRIDE + MITRE ATLAS) is done during the design and planning phase—before writing most of the code or deploying the system.
+
+ATLAS includes 52 documented case studies of real AI attacks. Two worth noting:
+1. ShadowRay: 
+   - RAY: A software tool that connects and manages hundreds of computers so they can work together to train heavy AI models.
+   - The Vulnerability: Ray’s management dashboard had no password protection by default, leaving its control port wide open to the internet.
+   - How Hackers Got In: Attackers scanned the web for exposed Ray servers and sent remote commands without needing to log in.
+   - Stealing Secrets: Once inside, they extracted cloud credentials, database passwords, and private AI training data stored on the machines
+   - Mining Crypto: They hijacked expensive GPUs across over 1,000 corporate clusters to mine cryptocurrency (Monero) for free profit.
+   - Maintaining Access: They installed hidden backdoors to keep control of the compromised AI servers long-term.
+2. Morris II Worm:
+   - Morris II was an experimental AI worm created by security researchers to test whether generative AI systems could infect one another automatically.
+   - What It Target: AI-powered applications that use RAG to process untrusted text (like emails or documents).
+   - Zero-Click Spread: Runs automatically in the background as soon as an AI agent reads or retrieves the malicious message.
+   - Dual Impact: Simultaneously steals private data (PII) and turns the infected AI assistant into a spam bot that infects other AI agents.
+   - Why It Matters: Proves that interconnected AI agents can create self-propagating malware networks if input text isn't strictly sanitized.
+
+
+STRIDE-AI: Initial threat identification, "what could go wrong"
+MITRE ATLAS: Enrichment, "how exactly would an attacker do this"
+OWASP LLM Top 10: Assessment and scoping, "where does this risk live and how critical is it"
